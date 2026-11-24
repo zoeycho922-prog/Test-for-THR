@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>给唐浩然的小测试</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600&display=swap">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    background:
+      radial-gradient(circle at 12% 8%, #ffe6ef 0%, transparent 46%),
+      radial-gradient(circle at 92% 92%, #f2e8ff 0%, transparent 48%),
+      linear-gradient(168deg,#fff8fa 0%,#ffeff5 46%,#fdf0ff 100%);
+    background-attachment:fixed;
+    min-height:100%;
+    overflow-x:hidden;
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    padding:26px 20px calc(26px + env(safe-area-inset-bottom));
+  }
+
+  /* 背景漂浮小心心 */
+  .bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+  .bg i{position:absolute;display:block;color:#ffc2d8;opacity:.45;
+    animation:float 9s linear infinite;font-style:normal}
+  @keyframes float{
+    0%{transform:translateY(0) rotate(0deg) scale(.9);opacity:0}
+    12%{opacity:.5}
+    88%{opacity:.35}
+    100%{transform:translateY(-110vh) rotate(24deg) scale(1.1);opacity:0}
+  }
+
+  /* 卡片 */
+  .card{
+    position:relative;z-index:2;width:100%;max-width:430px;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(8px);
+    border:1px solid #ffe0ea;
+    border-radius:28px;
+    box-shadow:0 18px 50px -18px rgba(230,120,160,.35),0 4px 14px rgba(230,140,170,.12);
+    padding:30px 24px 26px;
+    text-align:center;
+    animation:cardIn .7s cubic-bezier(.2,.9,.2,1) both;
+  }
+  @keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+
+  .top{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px}
+  .dot{width:7px;height:7px;border-radius:50%;background:#ffd5e2;transition:.35s}
+  .dot.on{background:#ff8db8;transform:scale(1.35);box-shadow:0 0 0 4px rgba(255,141,184,.14)}
+
+  .badge{font-size:11.5px;letter-spacing:.22em;color:#d98aab;font-weight:500;margin-bottom:14px}
+
+  .cat{font-size:34px;display:block;margin-bottom:10px;animation:swing 2.6s ease-in-out infinite}
+  @keyframes swing{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-5px)}}
+
+  .q{font-size:clamp(19px,5.4vw,23px);font-weight:700;color:#5a3648;
+    line-height:1.6;letter-spacing:.04em;margin-bottom:8px}
+  .sub{font-size:12.5px;color:#b58ba0;letter-spacing:.1em;margin-bottom:22px}
+
+  .opts{display:flex;flex-direction:column;gap:12px}
+  .opt{
+    appearance:none;border:none;cursor:pointer;
+    width:100%;padding:16px 18px;
+    border-radius:18px;
+    background:#fff;
+    border:1.5px solid #ffdfea;
+    color:#6b4353;
+    font-family:inherit;
+    font-size:15.5px;font-weight:500;letter-spacing:.06em;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    box-shadow:0 3px 0 #ffe4ee,0 8px 18px -10px rgba(230,120,160,.4);
+    transition:transform .16s ease, background .2s ease, border-color .2s ease, box-shadow .16s ease;
+  }
+  .opt .ico{font-size:17px;opacity:.75}
+  .opt:hover{background:#fffafc;border-color:#ffc2da}
+  .opt:active{transform:translateY(3px) scale(.985);box-shadow:0 0 0 #ffe4ee,0 3px 10px -8px rgba(230,120,160,.4)}
+  .opt b{font-weight:600}
+
+  .reveal{
+    margin-top:20px;padding:16px 16px 17px;border-radius:18px;
+    background:linear-gradient(180deg,#fff4f8,#fff);
+    border:1px dashed #ffc7dc;
+    animation:pop .5s cubic-bezier(.2,1.2,.3,1) both;
+  }
+  @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+  .reveal p{font-size:14.5px;line-height:1.9;color:#7b4a5d;letter-spacing:.04em}
+
+  .next{
+    margin-top:18px;border:none;cursor:pointer;
+    font-family:inherit;font-size:14px;font-weight:600;letter-spacing:.16em;
+    color:#fff;padding:14px 34px;border-radius:999px;
+    background:linear-gradient(135deg,#ff9fc3,#ff7fb2);
+    box-shadow:0 10px 24px -10px rgba(255,110,160,.85);
+    transition:transform .16s ease,filter .2s;
+  }
+  .next:active{transform:scale(.96);filter:brightness(.96)}
+
+  /* 结局 */
+  .end h1{font-family:"Noto Serif SC",serif;font-size:clamp(22px,6vw,28px);
+    color:#5a3648;letter-spacing:.1em;line-height:1.7;font-weight:600}
+  .end .names{margin-top:18px;font-family:"Noto Serif SC",serif;
+    font-size:clamp(17px,4.6vw,20px);color:#c06487;letter-spacing:.14em}
+  .end .names span{color:#ff9dbf}
+  .end .txt{margin-top:22px;font-size:14px;line-height:2.1;color:#7b4a5d;letter-spacing:.03em}
+  .end .sign{margin-top:16px;font-size:11.5px;letter-spacing:.28em;color:#c99aae}
+  .stamp{display:inline-block;margin-top:20px;padding:9px 20px;border-radius:999px;
+    background:#fff2f7;border:1.5px solid #ffd0e0;color:#d4709a;
+    font-size:12.5px;letter-spacing:.18em;transform:rotate(-3deg)}
+
+  /* 撒心 */
+  .rain{position:fixed;inset:0;pointer-events:none;z-index:6;overflow:hidden}
+  .rain i{position:absolute;font-style:normal;animation:drop 2.2s linear forwards}
+  @keyframes drop{
+    0%{transform:translateY(-10vh) scale(.6) rotate(0);opacity:1}
+    100%{transform:translateY(110vh) scale(1) rotate(220deg);opacity:0}
+  }
+</style>
+</head>
+<body>
+<div class="bg" id="bg"></div>
+<div class="card" id="card"></div>
+
+<script>
+(function(){
+
+  /* ---------- 背景漂浮心 ---------- */
+  const bg = document.getElementById('bg');
+  const glyphs = ['♡','♡','♡','✦','❀'];
+  for (let i = 0; i < 14; i++){
+    const el = document.createElement('i');
+    el.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+    el.style.left = (Math.random() * 96) + '%';
+    el.style.bottom = '-' + (10 + Math.random() * 30) + 'px';
+    el.style.fontSize = (10 + Math.random() * 14) + 'px';
+    el.style.animationDelay = (Math.random() * 9) + 's';
+    el.style.animationDuration = (7 + Math.random() * 6) + 's';
+    bg.appendChild(el);
+  }
+
+  /* ---------- 剧情 ---------- */
+  const steps = [
+    {
+      cat:'🐰',
+      badge:'第 1 题 · 共 3 题',
+      q:'今天，想我了吗？',
+      sub:'（认真选，选错也不许赖账）',
+      opts:[
+        { ico:'🌱', label:'有一点点想', reply:'一点点我也收下。<br>剩下的，明天再多想一点吧。' },
+        { ico:'🌷', label:'想到停不下来', reply:'那你要负责。<br>因为我也是，停不下来。' }
+      ]
+    },
+    {
+      cat:'🐣',
+      badge:'第 2 题 · 共 3 题',
+      q:'那我算你的什么人？',
+      sub:'（这题没有标准答案，只有真心）',
+      opts:[
+        { ico:'🎀', label:'很特别的人', reply:'“特别”这两个字，<br>已经够我高兴一整天了。' },
+        { ico:'🏡', label:'以后都想见的人', reply:'这句我要记很久。<br>记到很久以后还在记。' }
+      ]
+    },
+    {
+      cat:'🐻',
+      badge:'第 3 题 · 共 3 题',
+      q:'最后一句，你选哪个？',
+      sub:'（选完就没有回头路了哦）',
+      opts:[
+        { ico:'☀️', label:'明天见', reply:'好。<br>明天见，说好了。' },
+        { ico:'🌙', label:'一直见', reply:'有点贪心。<br>不过……我喜欢你贪心。' }
+      ]
+    }
+  ];
+
+  const card = document.getElementById('card');
+  let idx = 0;
+
+  function dots(){
+    return '<div class="top">' + steps.map((_, i) =>
+      '<div class="dot' + (i < idx ? ' on' : (i === idx ? ' on' : '')) + '"></div>'
+    ).join('') + '</div>';
+  }
+
+  function render(){
+    const s = steps[idx];
+    card.style.animation = 'none';
+    void card.offsetWidth;
+    card.style.animation = 'cardIn .6s cubic-bezier(.2,.9,.2,1) both';
+
+    card.innerHTML =
+      '<div class="top">' + steps.map((_, i) =>
+        '<div class="dot' + (i <= idx ? ' on' : '') + '"></div>').join('') + '</div>' +
+      '<div class="badge">' + s.badge + '</div>' +
+      '<span class="cat">' + s.cat + '</span>' +
+      '<div class="q">' + s.q + '</div>' +
+      '<div class="sub">' + s.sub + '</div>' +
+      '<div class="opts" id="opts">' +
+        s.opts.map((o, i) =>
+          '<button class="opt" data-i="' + i + '"><span><span class="ico">' + o.ico + '</span>&nbsp;&nbsp;' + o.label + '</span><span class="ico">›</span></button>'
+        ).join('') +
+      '</div>' +
+      '<div id="slot"></div>';
+
+    card.querySelectorAll('.opt').forEach(btn => {
+      btn.addEventListener('click', () => pick(parseInt(btn.dataset.i, 10)));
+    });
+  }
+
+  function pick(i){
+    const s = steps[idx];
+    const opts = card.querySelectorAll('.opt');
+    // 按钮不可再点，选中的高亮
+    opts.forEach((b, k) => {
+      b.disabled = true;
+      b.style.cursor = 'default';
+      if (k === i){
+        b.style.background = '#fff2f7';
+        b.style.borderColor = '#ff9dbf';
+      } else {
+        b.style.opacity = '.42';
+      }
+    });
+
+    const slot = card.querySelector('#slot');
+    slot.innerHTML =
+      '<div class="reveal"><p>' + s.opts[i].reply + '</p></div>' +
+      (idx < steps.length - 1
+        ? '<button class="next" id="next">下一题 →</button>'
+        : '<button class="next" id="next">看结局 ♡</button>');
+
+    slot.querySelector('#next').addEventListener('click', () => {
+      idx++;
+      if (idx >= steps.length) ending(); else render();
+    });
+
+    slot.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  function ending(){
+    card.style.animation = 'none';
+    void card.offsetWidth;
+    card.style.animation = 'cardIn .7s cubic-bezier(.2,.9,.2,1) both';
+
+    card.innerHTML =
+      '<div class="top">' + steps.map(() => '<div class="dot on"></div>').join('') + '</div>' +
+      '<div class="end">' +
+        '<span class="cat">🎁</span>' +
+        '<h1>三题全对<br>满分 100</h1>' +
+        '<div class="stamp">超级无敌喜欢你</div>' +
+        '<div class="txt">好想你<br>' +
+          '好想你<br>' +
+          '好想你<br><br>' +
+          '不用做什么大事，<br>' +
+          '只要你在，就好了。</div>' +
+        '<div class="names">Zoey <span>♡</span> 唐先生</div>' +
+        '<div class="sign">2026 · 11 · 24</div>' +
+        '<button class="next" id="again" style="margin-top:24px">再点我一下</button>' +
+      '</div>';
+
+    card.querySelector('#again').addEventListener('click', rainHearts);
+    setTimeout(rainHearts, 900);
+  }
+
+  function rainHearts(){
+    const layer = document.createElement('div');
+    layer.className = 'rain';
+    const gs = ['♡','💗','🌸','✨','💕'];
+    for (let i = 0; i < 40; i++){
+      const h = document.createElement('i');
+      h.textContent = gs[Math.floor(Math.random() * gs.length)];
+      h.style.left = (Math.random() * 100) + '%';
+      h.style.top = '-12vh';
+      h.style.fontSize = (12 + Math.random() * 16) + 'px';
+      h.style.animationDelay = (Math.random() * 1.1) + 's';
+      h.style.animationDuration = (1.6 + Math.random() * 1.4) + 's';
+      layer.appendChild(h);
+    }
+    document.body.appendChild(layer);
+    setTimeout(() => layer.remove(), 3600);
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
